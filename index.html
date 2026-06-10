@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Muslim Prayer Times</title>
+  <meta name="description" content="Accurate daily Muslim prayer times and countdowns based on your location. Auto-detects location or search by city. Includes next-prayer countdown and easy feedback." />
+  <meta name="author" content="Muhammed Razik" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='86' font-size='80'%3E%F0%9F%8C%9C%3C/text%3E%3C/svg%3E" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"/>
   <style>
@@ -20,12 +22,7 @@
       justify-content: space-between;
     }
 
-    main {
-      width: 100%;
-      max-width: 540px;
-      padding: 1rem 1rem 1.5rem;
-      flex: 1;
-    }
+    /* page layout container (consolidated) */
 
     header {
       width: 100%;
@@ -76,7 +73,8 @@
     main {
       width: 100%;
       max-width: 540px;
-      padding: 1rem 1rem 3rem;
+      padding: 1rem 1rem 1.5rem;
+      flex: 1;
     }
 
     /* Status banner */
@@ -107,7 +105,7 @@
       margin-bottom: 1.2rem;
     }
     #manual-box.show { display: block; }
-    #manual-box h3 {
+    #manual-box h2 {
       font-size: 0.95rem;
       font-weight: 500;
       color: #a8e6c8;
@@ -298,7 +296,7 @@
 
   <!-- Manual city entry -->
   <div id="manual-box">
-    <h3><i class="ti ti-search"></i> Enter your city</h3>
+    <h2><i class="ti ti-search"></i> Enter your city</h2>
     <div class="input-row">
       <input id="city-input" list="city-options" type="text" placeholder="e.g. Cairo, London, Dubai…" autocomplete="off" />
       <button onclick="searchCity()"><i class="ti ti-arrow-right"></i> Search</button>
@@ -569,6 +567,12 @@
   setInterval(tick, 1000);
   tick();
   requestLocation();
+  // register service worker for caching with TTLs
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('sw.js').then(() => {
+      console.log('Service Worker registered');
+    }).catch(err => console.warn('SW register failed', err));
+  }
 </script>
 </body>
 </html>
